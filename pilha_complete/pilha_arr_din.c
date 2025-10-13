@@ -13,7 +13,7 @@
 *   n->p = (int*)malloc(10 * sizeof(int)): inicializa o ponteiro da estrutura com um vetor
 *          de 10 posicoes iniciais dinamicamente alocado;
 *
-*   return n: retorna o endereço de memoria da estrutura Pilha criada;
+*   return n: retorna o endereÃ§o de memoria da estrutura Pilha criada;
 */
 Pilha* cria(void) {
     Pilha* n = (Pilha*)malloc(sizeof(Pilha));
@@ -98,7 +98,7 @@ void push(Pilha* p, const int v) {
 *   if (p==NULL), if(taVazia(p)): Testa se a pilha nao foi inicializada ou ta vazia;
 *
 *   return p->pa[p->top--]: retorna o elemento que ta no topo da pilha,
-*                           logo após decrementa a variavel p->top;
+*                           logo apÃ³s decrementa a variavel p->top;
 *
 */
 int pop(Pilha* p) {
