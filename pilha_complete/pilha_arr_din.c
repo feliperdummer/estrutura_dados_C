@@ -1,4 +1,4 @@
-#include "pilhas.h"
+#include "pilha_arr_din.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -142,3 +142,4 @@ void sKill(Pilha* p) {
     free(p->pa);
     free(p);
 }
+
