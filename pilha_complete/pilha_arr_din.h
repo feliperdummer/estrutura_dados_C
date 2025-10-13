@@ -1,13 +1,13 @@
-#ifndef PILHAS_H
-#define PILHAS_H
+#ifndef PILHA_ARR_DIN
+#define PILHA_ARR_DIN
 
 /*struct pilha:
 *
-*   int top -> Representa o indice do elemento que está no topo da lista;
-*              Assume valor -1 quando a lista está vazia;
+*   int top -> Representa o indice do elemento que estÃ¡ no topo da lista;
+*              Assume valor -1 quando a lista estÃ¡ vazia;
 *
 *   type *pa -> Representa o ponteiro para o array dinamicamente alocado;
-*              O tipo (type) é relativo ao uso da lista, pode ser short, int, long, float, double, ou qualquer outro que se encaixe;
+*              O tipo (type) Ã© relativo ao uso da lista, pode ser short, int, long, float, double, ou qualquer outro que se encaixe;
 *
 *   int tam -> Representa o tamanho atual da pilha;
 */
@@ -27,4 +27,5 @@ int pop(Pilha*);
 int peek(Pilha*);
 void sKill(Pilha*);
 
-#endif // PILHAS_H
+#endif // PILHA_ARR_DIN
+
