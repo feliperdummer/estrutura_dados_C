@@ -13,7 +13,7 @@
 *   n->p = malloc(1 * sizeof(int)): inicializa o ponteiro da estrutura com um vetor
 *          de 1 posicao inicial dinamicamente alocado;
 *
-*   return n: retorna o endereço de memoria da estrutura Pilha criada;
+*   return n: retorna o endereÃ§o de memoria da estrutura Pilha criada;
 */
 Pilha* cria(void) {
     Pilha* n = (Pilha*)malloc(sizeof(Pilha));
@@ -72,17 +72,13 @@ int tamanho(Pilha* p, const int opc) {
 
 /*push(Pilha* p, const int v):
 *
-*   if (taCheia(p)){...}: Testa caso a pilha tenha alcancado seu limite, caso sim,
-*                         realoca mais 10 blocos de memoria;
-*
-*   p->pa[++p->top] = v: Incrementa a variavel t->top e atribui o valor ao elemento do topo;
-*
 *   if (taCheia(p)) {...}: Aqui testa se o vetor da pilha chegou no limite, caso sim,
 *                          ele sempre vai dobrar o tamanho de elementos do atual, entao
 *                          caso a quant atual seja 1, vai realocar pra 2, e assim por diante.
-*
 *                          Depois disso, na linha p->tam = (tamanho(p, 't')*2), ele
 *                          atualiza o tamanho do vetor com o novo valor.
+*
+*   p->pa[++p->top] = v: Incrementa a variavel t->top e atribui o valor ao elemento do topo;
 */
 void push(Pilha* p, const int v) {
     if (p==NULL) {
@@ -105,7 +101,7 @@ void push(Pilha* p, const int v) {
 *   if (p==NULL), if(taVazia(p)): Testa se a pilha nao foi inicializada ou ta vazia;
 *
 *   return p->pa[p->top--]: retorna o elemento que ta no topo da pilha,
-*                           logo após decrementa a variavel p->top;
+*                           logo apÃ³s decrementa a variavel p->top;
 *
 */
 int pop(Pilha* p) {
@@ -149,3 +145,4 @@ void sKill(Pilha* p) {
     free(p->pa);
     free(p);
 }
+
