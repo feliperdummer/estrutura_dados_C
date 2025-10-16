@@ -17,7 +17,7 @@
 *   n->p = malloc(1 * sizeof(int)): inicializa o ponteiro da estrutura com um vetor
 *          de 1 posicao inicial dinamicamente alocado;
 *
-*   return n: retorna o endereÁo de memoria da estrutura Pilha criada;
+*   return n: retorna o endere√ßo de memoria da estrutura Pilha criada;
 */
 Pilha* cria(void) {
     Pilha* n = (Pilha*)malloc(sizeof(Pilha));
@@ -79,7 +79,7 @@ int tamanho(Pilha* p, const int opc) {
 *
 *
 *   if (taCheia(p)) {...}: Aqui testa se o vetor da pilha chegou no limite, caso sim,
-*                          ele sempre vai dobrar o tamanho de elementos do atual (an·lise amortizada),
+*                          ele sempre vai dobrar o tamanho de elementos do atual (an√°lise amortizada),
 *                          entao caso a quant atual seja 1, vai realocar pra 2, e assim por diante.
 *                          Depois disso, na linha p->tam = (tamanho(p, 't')*2), ele
 *                          atualiza o tamanho do vetor com o novo valor.
@@ -107,7 +107,7 @@ void push(Pilha* p, const int v) {
 *   if (p==NULL), if(taVazia(p)): Testa se a pilha nao foi inicializada ou ta vazia;
 *
 *   return p->pa[p->top--]: retorna o elemento que ta no topo da pilha,
-*                           logo apÛs decrementa a variavel p->top;
+*                           logo ap√≥s decrementa a variavel p->top;
 *
 */
 int pop(Pilha* p) {
@@ -172,7 +172,7 @@ void copiarPilha(Pilha* src, Pilha* dst, int* flagErro) {
 *
 *   if (taVazia(p1)): Caso base pra parar a recursa;
 *
-*   se chama recursivamente atÈ que a lista p1 (source) esteja vazia,
+*   se chama recursivamente at√© que a lista p1 (source) esteja vazia,
 *   a partir dai, ela "recoloca" os elementos na p1, mas ao mesmo
 *   tempo os compartilhando com p2;
 *
@@ -197,7 +197,7 @@ void transferirElementos(Pilha* p1, Pilha* p2) {
 *   if (p->top==0 || taVazia(p)): Casos base pra parar a recursividade, porque
 *                                 se a pilha tem apenas um elemento (p->top==0),
 *                                 quer dizerque automaticamente ela ja ta invertida.
-*                                 taVazia(p) È um teste pra ver se a lista passada
+*                                 taVazia(p) √© um teste pra ver se a lista passada
 *                                 como argumento ta vazia;
 *
 *
@@ -242,26 +242,27 @@ void insereFundo(Pilha* p, const int v) {
 *
 *   retorna 1 pra sucesso e 0 pro oposto do sucesso;
 *
-*   Essa funcao usa recursividade sÛ pra brincar, porque
-*   a versao iterativa È bem melhor em geral;
+*   Essa funcao usa recursividade s√≥ pra brincar, porque
+*   a versao iterativa √© bem melhor em geral;
 *
-*   if (taVazia(p1) && taVazia(p2)): Aqui È um teste que sÛ È verdade se as duas pilhas estiverem vazias
+*   if (taVazia(p1) && taVazia(p2)): Aqui √© um teste que s√≥ √© verdade se as duas pilhas estiverem vazias
 *                                    ao mesmo tempo, o que indica que sao do mesmo tamanho, informacao
 *                                    essencial pro resto da funcao;
 *
-*   if (taVazia(p1 || taVazia(p2)): Esse teste aqui È pra quando o primeiro de cima d· falso, o que abre
+*   if (taVazia(p1 || taVazia(p2)): Esse teste aqui √© pra quando o primeiro de cima d√° falso, o que abre
 *                                   a possibilidade das pilhas terem tamanhos diferentes, o que seria
-*                                   indicado caso uma estivesse vazia e outra nao, que È justamente o que
+*                                   indicado caso uma estivesse vazia e outra nao, que √© justamente o que
 *                                   esse teste comprova. Outra informacao crucial pro resto da funcao;
 *
 *   int aux1 = pop(p1), aux2 = pop(p2): Salva o elemento do topo das duas funcoes;
 *
 *
 *   int compTam = comparaPilhaRec(p1, p2): Chama a funcao recursivamente e armazena
-*   o valor de retorno em uma variavel compTam, È basicamente o que decide se as duas
-*   pilhas tem o mesmo tamanho.
+*                                          o valor de retorno em uma variavel compTam,
+*                                          e basicamente o que decide se as duas
+*                                          pilhas tem o mesmo tamanho.
 *
-*   if (compTam) {...}: Esse teste È feito porque mesmo se as duas funcoes tiverem o mesmo
+*   if (compTam) {...}: Esse teste √© feito porque mesmo se as duas funcoes tiverem o mesmo
 *                       tamanho, nao significa que seus elementos sejam iguais. Isso e testado
 *                       logo abaixo;
 *
@@ -308,7 +309,7 @@ int comparaPilhaRec(Pilha* p1, Pilha* p2) {
 *                                               os vetores atingir o tamanho do vetor, o que indica que
 *                                               ele precisa ter o tamanho incrementado, a tecnica usada pra
 *                                               esse aumento foi sempre dobrar o tamanho do vetor, um bagulho
-*                                               chamado an·lise amortizada, que pondera o custo de memÛria pelo
+*                                               chamado an√°lise amortizada, que pondera o custo de mem√≥ria pelo
 *                                               custo de tempo, e como o realloc normalmente e uma funcao que gasta
 *                                               um tempinho pra ser concluida, usar o menos possivel e a melhor opcao;
 *
@@ -359,3 +360,4 @@ int comparaPilhaItr(Pilha* p1, Pilha* p2) {
     free(t_p2);
     return r;
 }
+
