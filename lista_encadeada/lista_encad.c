@@ -104,14 +104,14 @@ void insereIL(Lista_e* l, const int v) {
 *                   para NULL, ja que ele vai ser
 *                   o novo ultimo no da lista;
 *
-*   l->tail = n: Agora o ponteiro para o ultimo
-*                elemento da lista aponta para
-*                o novo no;
-*
-*   if (l->tam){...}: Caso a lista esteja vazia,
+*   if (l->tam==0){...}: Caso a lista esteja vazia,
 *                      o novo no vai ser o tail
 *                      e o head da lista ao mes-
 *                      mo tempo;
+*
+*   l->tail = n: Agora o ponteiro para o ultimo
+*                elemento da lista aponta para
+*                o novo no;
 *
 *   l->tam++: Incrementa o valor da lista;
 *
@@ -542,4 +542,5 @@ void killL(Lista_e* l) {
     }
     free(l);
 }
+
 
