@@ -123,11 +123,11 @@ void insereFL(Lista_e* l, const int v) {
         return;
     n->info = v;
     n->prox = NULL;
-    l->tail = n;
     if (l->tam==0)
         l->head = n;
     else
         l->tail->prox = n;
+    l->tail = n;
     l->tam++;
 }
 
@@ -142,11 +142,11 @@ void insereFL(Lista_e* l, const int v) {
 *
 *   n->info = v: Atribui o valor ao novo no;
 *
-*   while (prim!=NULL && n->info > prim->info){...}: Caminha pela lista atÈ que ache o local
+*   while (prim!=NULL && n->info > prim->info){...}: Caminha pela lista at√© que ache o local
 *                                                    exato para colocar o novo no;
 *
 *   if (aux==NULL){...}: Caso aux seja NULL, quer dizer que o loop nao caminhou nenhuma vez,
-*                        entao ou o valor a ser inserido È o menor, ou a lista ta vazia. Nas
+*                        entao ou o valor a ser inserido √© o menor, ou a lista ta vazia. Nas
 *                        duas possibilidades, o novo no vai ser o novo head da lista;
 *
 *                        else: Aqui significa que entrou no loop, entao tem um elemento da lista
@@ -542,3 +542,4 @@ void killL(Lista_e* l) {
     }
     free(l);
 }
+
