@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 /*
-    autor: eu mesmo;
+    autor: eu mesmo
 */
 
 /*criaL(void):
@@ -542,5 +542,6 @@ void killL(Lista_e* l) {
     }
     free(l);
 }
+
 
 
