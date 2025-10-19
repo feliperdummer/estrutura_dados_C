@@ -2,10 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-    autor: eu mesmo
-*/
-
 /*criaL(void):
 
     Cria uma struct gerenciadora para lista;
@@ -542,6 +538,7 @@ void killL(Lista_e* l) {
     }
     free(l);
 }
+
 
 
 
