@@ -30,7 +30,6 @@ Pilha_l* criaPl(void) {
 *
 */
 _Bool taVaziaPl(Pilha_l* p) {
-    if (p==NULL) return 1;
     return p->l->tam==0;
 }
 
@@ -113,5 +112,6 @@ void killPl(Pilha_l* p) {
     killL(p->l);
     free(p);
 }
+
 
 
