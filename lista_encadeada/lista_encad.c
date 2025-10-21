@@ -24,7 +24,7 @@ Lista_e* criaL(void) {
     return n;
 }
 
-/*buildA(int* arr, int tam):
+/*buildEA(int* arr, int tam):
 *
 *   Constroi uma lista a partir de um array;
 *
@@ -38,7 +38,7 @@ Lista_e* criaL(void) {
 *                           arr aponta a cada iteracao;
 *
 */
-Lista_e* buildA(int* arr, int tam) {
+Lista_e* buildEA(int* arr, int tam) {
     Lista_e* l = criaL();
 
     if (tam<=0)
@@ -538,6 +538,7 @@ void killL(Lista_e* l) {
     }
     free(l);
 }
+
 
 
 
