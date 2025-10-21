@@ -37,7 +37,7 @@ typedef struct node_e Node_e;
 *   Node_e* tail: ponteiro para o no final da lista;
 *
 *   Tipo assim, a vantagem de usar a struct gerenciadora
-*   é que operacoes como inserir no inicio ou o final vao
+*   Ã© que operacoes como inserir no inicio ou o final vao
 *   ser O(1) agora, e qualquer funcao que faca alteracao no
 *   corpo da lista nao vai precisar retornar alguma coisa mais,
 *   porque a alteracao vai ser na struct gerenciadora, e o
@@ -52,7 +52,7 @@ struct lista_e {
 typedef struct lista_e Lista_e;
 
 Lista_e* criaL(void);
-Lista_e* buildA(int*, const int);
+Lista_e* buildEA(int*, const int);
 void insereIL(Lista_e*, const int);
 void insereFL(Lista_e*, const int);
 void insereOL(Lista_e*, const int);
@@ -64,3 +64,4 @@ int searchL(Lista_e*, const int);
 void killL(Lista_e*);
 
 #endif // LISTA_ENCAD_H
+
