@@ -12,7 +12,7 @@
 *              o (type) de cada info pode variar de acordo
 *              com o uso da lista, aqui foi usado int;
 *
-*   struct* node_e prox: ponteiro auto referenciado
+*   struct node_e* prox: ponteiro auto referenciado
 *                        que vai apontar para o proximo
 *                        no da lista;
 *
@@ -64,4 +64,5 @@ int searchL(Lista_e*, const int);
 void killL(Lista_e*);
 
 #endif // LISTA_ENCAD_H
+
 
