@@ -4,13 +4,13 @@
 #include "lista_encad.h"
 
 /*struct pilha_l:
-
-    Definicao da struct para a pilha;
-
-    o _l no nome significa que a pilha vai usar lista na sua implementacao;
-
-    Lista_e* l: Estrutura da lista que vai ser usada na pilha;
-
+*
+*   Definicao da struct para a pilha;
+*
+*   o _l no nome significa que a pilha vai usar lista na sua implementacao;
+*
+*   Lista_e* l: Estrutura da lista que vai ser usada na pilha;
+*
 */
 struct pilha_l { Lista_e* l; };
 typedef struct pilha_l Pilha_l;
@@ -24,3 +24,4 @@ int peekPl(Pilha_l*);
 void killPl(Pilha_l*);
 
 #endif // PILHA_LISTA_H
+
