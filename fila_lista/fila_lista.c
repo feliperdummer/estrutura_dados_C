@@ -67,19 +67,19 @@ int dequeueFl(Fila_l* f, int *flag) {
 }
 
 /*taVaziaFl(Fila_l* f):
-
-    A funcao leva em consideracao que a fila
-    foi inicializada, caso contrario, pode
-    (provavelmente vai) dar crash no programa;
-
-    Determina se a fila ta vazia ou nao;
-
-    Retorna o valor da expressao f->l->tam==0:
-
-        0: caso a fila tenha elementos;
-
-        !0: Caso a fila esteja vazia;
-
+*
+*   A funcao leva em consideracao que a fila
+*   foi inicializada, caso contrario, pode
+*   (provavelmente vai) dar crash no programa;
+*
+*   Determina se a fila ta vazia ou nao;
+*
+*   Retorna o valor da expressao f->l->tam==0:
+*
+*           0: caso a fila tenha elementos;
+*
+*           !0: Caso a fila esteja vazia;
+*
 */
 _Bool taVaziaFl(Fila_l* f) {
     return f->l->tam==0;
@@ -117,3 +117,4 @@ void killFl(Fila_l* f) {
     killL(f->l);
     free(f);
 }
+
