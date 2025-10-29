@@ -111,13 +111,13 @@ void enqueueFa(Fila_a* f, const int v) {
 
 /*alinhaFilaFa(Fila_a* f):
 *
+*   Aloca um novo vetor para a fila, assim como o alinha;
+*
 *   Alinhar o novo vetor alocado e necessario porque
 *   a fila pode estar fragmentada, ou seja, o primeiro
 *   elemento da fila nao necessariamente ocupa o primeiro
 *   indice do array, e o ultimo elemento da fila nao
-*   necessariamente ocupa o ultimo indice da fila;
-*
-*   Aloca um novo vetor para a fila, assim como o alinha;
+*   necessariamente ocupa o ultimo indice da array;
 *
 *   Essa funcao tem a unica especialidade de organizar um
 *   novo vetor pra fila caso o antigo seja preenchido por
@@ -212,3 +212,4 @@ int dequeueFa(Fila_a* f, int* flag) {
     }
     return r;
 }
+
