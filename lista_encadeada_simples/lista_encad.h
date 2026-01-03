@@ -50,13 +50,13 @@ typedef struct node_e Node_e;
     _e no fim do nome significa que a struct foi feita
     para listas encadeadas;
  
-    size_t tam: quantidade de nos da lista;
+    ssize_t tam: quantidade de nos da lista;
  
     size_t data_type: quantidade de bytes que o tipo de dado da lista ocupa
 
-        **uso do size_t: no tam eu coloquei porque é bonito, no data_type eu
-                         coloquei porque eu preciso armazenar a quantidade de
-                         bytes que o tipo de dado da lista ocupa na memoria;
+        **uso do size_t e ssize_t: no tam eu coloquei porque é bonito, no data_type eu
+                                   coloquei porque eu preciso armazenar a quantidade de
+                                   bytes que o tipo de dado da lista ocupa na memoria;
  
     Node_e* head: ponteiro para o no inicial da lista;
  
@@ -71,7 +71,7 @@ typedef struct node_e Node_e;
 
 */
 struct lista_e {
-    size_t tam;
+    ssize_t tam;
     size_t data_type;
 
     Node_e* head;
@@ -91,7 +91,7 @@ typedef struct lista_e Lista_e;
 */
 typedef int (*Comparador)(const void* a, const void* b);
 
-/*criaL(size_t type):
+/*Lista_e* criaL(size_t type):
 
     Cria uma struct gerenciadora para lista;
 
@@ -112,8 +112,10 @@ typedef int (*Comparador)(const void* a, const void* b);
 */
 Lista_e* criaL(size_t);
 
-/*void insereIL(Lista_e* lista, const void* valor):
+/*bool insereIL(Lista_e* lista, const void* valor):
     Insere um no no inicio da lista;
+
+    Retorna false para ponteiro nulo ou falha e true para sucesso;
  
     Node_e* node...: cria um ponteiro para um no
                      e aloca um no;
@@ -155,11 +157,13 @@ Lista_e* criaL(size_t);
 
     lista->tam = lista->tam + 0x1: incrementa o tamanho da lista em 1;
 */
-void insereIL(Lista_e*, const void*);
+bool insereIL(Lista_e*, const void*);
 
-/*void insereFL(Lista_e* lista, const void* valor):
+/*bool insereFL(Lista_e* lista, const void* valor):
  
     Insere um novo no fim da lista;
+
+    Retorna false para ponteiro nulo ou falha e true para sucesso;
  
     Node_e* node...: cria um ponteiro para um no e
                      aloca um no;
@@ -179,11 +183,13 @@ void insereIL(Lista_e*, const void*);
 
     lista->tam = lista->tam + 0x1: incrementa o tamanho da lista em 1;
 */
-void insereFL(Lista_e*, const void*);
+bool insereFL(Lista_e*, const void*);
 
-/*void insereOL(Lista_e* lista, const void* valor, Comparador cmp):
+/*bool insereOL(Lista_e* lista, const void* valor, Comparador cmp):
 
-   Insere um no de forma ordenada na lista;
+    Insere um no de forma ordenada na lista;
+
+    Retorna false para ponteiro nulo ou falha e true para sucesso;
  
     A funcao espera que a lista esteja ordenada,
     senao, o comportamento sera indefinido;
@@ -224,11 +230,13 @@ void insereFL(Lista_e*, const void*);
     lista->tam = lista->tam + 0x1: incrementa o tamanho da lista em 1;
  
 */
-void insereOL(Lista_e*, const void*, Comparador);
+bool insereOL(Lista_e*, const void*, Comparador);
 
-/*void inserePL(Lista_e* lista, const void* valor, size_t p):
+/*bool inserePL(Lista_e* lista, const void* valor, size_t p):
  
     Insere um novo numa posicao personalizada;
+
+    Retorna false para ponteiro nulo ou falha e true para sucesso;
 
     Node_e* node...: aloca um novo no na memoria;
  
@@ -255,13 +263,13 @@ void insereOL(Lista_e*, const void*, Comparador);
     lista->tam = lista->tam + 0x1: incrementa o tamanho da lista em 1;
  
 */
-void inserePL(Lista_e*, const void*, size_t);
+bool inserePL(Lista_e*, const void*, size_t);
 
-/*int rmIL(Lista_e* lista):
+/*bool rmIL(Lista_e* lista):
 
     Remove o primeiro no de uma lista;
 
-    Retorna 1 para sucesso e -1 para lista vazia;
+    Retorna true para sucesso e false para lista vazia ou ponteiro nulo;
 
     if (list->tam==0x0) {...}: testa se a lista ta vazia;
 
@@ -279,13 +287,13 @@ void inserePL(Lista_e*, const void*, size_t);
     lista->tam = lista->tam - 0x1: decrementa o tamanho da lista em 1;
 
 */
-int rmIL(Lista_e*);
+bool rmIL(Lista_e*);
 
-/*int rmUL(Lista_e* lista):
+/*bool rmUL(Lista_e* lista):
 
     Remove o ultimo no de uma lista;
 
-    Retorna 1 para sucesso e -1 para lista vazia;
+    Retorna true para sucesso e false para lista vazia;
 
     if (lista->tam==0x0) {...}: testa se a lista ta vazia;
 
@@ -298,13 +306,13 @@ int rmIL(Lista_e*);
     lista->tam = lista->tam - 0x1: decrementa o tamanho da lista em 1;
 
 */
-int rmUL(Lista_e*);
+bool rmUL(Lista_e*);
 
-/*int rmPL(Lista_e* lista, const size_t p):
+/*bool rmPL(Lista_e* lista, const size_t p):
  
     Remove um no na posicao especificada;
  
-    Retorna 1 pra sucesso, -1 pra lista vazia e -2 pra posicao invalida;
+    Retorna true pra sucesso, false pra lista vazia ou posicao invalida;
  
     if (lista->tam==0x0){...}: testa se a lista ta vazia;
  
@@ -342,13 +350,13 @@ int rmUL(Lista_e*);
     lista->tam = lista->tam - 0x1: decrementa o tamanho da lista em 1;
  
 */
-int rmPL(Lista_e*, const size_t);
+bool rmPL(Lista_e*, const size_t);
 
-/*size_t rmVL(Lista_e* lista, const void* valor, Comparador cmp):
+/*ssize_t rmVL(Lista_e* lista, const void* valor, Comparador cmp):
  
     Remove um todos os nos do valor passado como argumento;
  
-    Retorna a quantidade de nos retirados para sucesso, e 0 para erro;
+    Retorna a quantidade de nos retirados ou -1 para ponteiro nulo;
  
     if (lista->tam==0){...}: testa se a lista ta vazia;
  
@@ -399,7 +407,7 @@ int rmPL(Lista_e*, const size_t);
  
     lista->tam = lista->tam - count: decrementa a quantidade total de elementos da lista;
 */
-size_t rmVL(Lista_e*, const void*, Comparador);
+ssize_t rmVL(Lista_e*, const void*, Comparador);
 
 /*ssize_t rmFL(Lista_e* lista, const void* valor, Comparador cmp):
 
@@ -464,21 +472,30 @@ ssize_t rmFL(Lista_e*, const void*, Comparador);
 */
 ssize_t searchL(const Lista_e*, const void*, Comparador);
 
-/*size_t sizeL(Lista_e*):
+/*ssize_t sizeL(Lista_e*):
 
-    retorna o número de nós da lista atualmente;
-
-*/
-size_t sizeL(const Lista_e*);
-
-/*bool taVazia(Lista_e*):
-
-    retorna (true) para lista vazia e (false) para o contrario;
+    retorna o número de nós da lista atualmente ou -1 para ponteiro nulo;
 
 */
-bool taVazia(const Lista_e*);
+ssize_t sizeL(const Lista_e*);
 
-/*killL(Lista_e* l):
+/*bool taVaziaL(Lista_e*):
+
+    retorna (true) para lista vazia e (false) para ponteiro nulo ou caso tenha elementos;
+
+*/
+bool taVaziaL(const Lista_e*);
+
+/*bool limpaL(Lista_e*):
+
+    remove todos os nós da lista, mas a mantém na memória;
+
+    retorna true para sucesso e false para ponteiro nulo
+
+*/
+bool limpaL(Lista_e*);
+
+/*void killL(Lista_e* l):
  
     elimina a lista;
  
@@ -486,4 +503,3 @@ bool taVazia(const Lista_e*);
 void killL(Lista_e*);
 
 #endif // LISTA_ENCAD_H
-
