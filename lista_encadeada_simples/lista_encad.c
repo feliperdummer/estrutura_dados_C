@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
+#include <stdbool.h>
 
 
 Lista_e* criaL(size_t data_size) {
@@ -324,7 +325,7 @@ ssize_t rmFL(Lista_e* lista, const void* valor, Comparador cmp) {
     return -1;
 }
 
-ssize_t searchL(Lista_e* lista, const void* valor, Comparador cmp) {
+ssize_t searchL(const Lista_e* lista, const void* valor, Comparador cmp) {
     if (lista->tam==0x0) {
         return -1;
     }
@@ -347,6 +348,14 @@ ssize_t searchL(Lista_e* lista, const void* valor, Comparador cmp) {
     }
 
     return -1;
+}
+
+size_t sizeL(const Lista_e* lista) {
+    return lista->tam;
+}
+
+bool taVazia(const Lista_e* lista) {
+    return (lista->tam==0x0) ? true : false;
 }
 
 void killL(Lista_e* lista) {
