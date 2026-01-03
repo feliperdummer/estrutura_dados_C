@@ -2,6 +2,7 @@
 #define LISTA_ENCAD_H
 
 #include <stddef.h>
+#include <stdbool.h>
 
 /*
     aqui tem a melhor explicacao que eu consegui pensar na hora de escrever essas funcoes,
@@ -10,7 +11,7 @@
 */
 
 /*
-    a IA Gemini 3 Pro me foi bem util na hora de pensar na forma de escrever as  linhas de código, ela traz 
+    a IA Gemini 3 Pro me foi bem util na hora de pensar na forma de escrever as linhas de código, ela traz 
     ideias estruturais muito úteis a cerca do design que eu nunca teria pensado sozinho;
 
     Nenhuma IA foi usada para gerar código, todo código gerado é uma mistura de 
@@ -461,7 +462,21 @@ ssize_t rmFL(Lista_e*, const void*, Comparador);
                              antes do loop;
 
 */
-ssize_t searchL(Lista_e*, const void*, Comparador);
+ssize_t searchL(const Lista_e*, const void*, Comparador);
+
+/*size_t sizeL(Lista_e*):
+
+    retorna o número de nós da lista atualmente;
+
+*/
+size_t sizeL(const Lista_e*);
+
+/*bool taVazia(Lista_e*):
+
+    retorna (true) para lista vazia e (false) para o contrario;
+
+*/
+bool taVazia(const Lista_e*);
 
 /*killL(Lista_e* l):
  
