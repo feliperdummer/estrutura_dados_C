@@ -1,0 +1,18 @@
+compilacao e uso:
+
+
+Compile o arquivo, mas não gere o executável:
+
+	gcc -c lista_encad.c -o lista_encad.o
+
+Coloque o arquivo .o dentro de um arquivo de biblioteca:
+
+	ar rcs liblista_encad.a lista_encad.o
+
+
+
+Agora é só adicionar como padrao em alguma IDE ou usar
+
+	gcc main.c liblista.a -o teste.o
+
+para juntar os arquivos manualmente
