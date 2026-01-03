@@ -409,7 +409,7 @@ size_t rmVL(Lista_e*, const void*, Comparador);
  
     Remove o primeiro no que contenha o valor passado como argumento;
  
-    Retorna a posicao que foi removida em caso de sucesso, e 0 para falha;
+    Retorna a posicao que foi removida em caso de sucesso, e -1 para falha;
  
     if (lista->tam==0x0){...}: testa se a lista ta vazia;
  
@@ -486,3 +486,4 @@ bool taVazia(const Lista_e*);
 void killL(Lista_e*);
 
 #endif // LISTA_ENCAD_H
+
