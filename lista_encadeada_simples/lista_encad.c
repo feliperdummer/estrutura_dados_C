@@ -20,21 +20,20 @@ Lista_e* criaL(size_t data_size) {
     return lista;
 }
 
-bool insereIL(Lista_e* lista, const void* valor) {
+L_Status insereIL(Lista_e* lista, const void* valor) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return false;
+        return L_NULL_PTR;
     }
 
     Node_e* node = (Node_e*)malloc(sizeof(Node_e));
     if (node==NULL) {
-        return false;
+        return L_MEM_ERR;
     }
 
     node->info = malloc(lista->data_type);
     if (node->info==NULL) {
         free(node);
-        return false;
+        return L_MEM_ERR;
     }
     memcpy(node->info, valor, lista->data_type);
 
@@ -45,24 +44,23 @@ bool insereIL(Lista_e* lista, const void* valor) {
     }
     lista->tam = lista->tam + 0x1;
 
-    return true;
+    return L_SUCCESS;
 }
 
-bool insereFL(Lista_e* lista, const void* valor) {
+L_Status insereFL(Lista_e* lista, const void* valor) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return false;
+        return L_NULL_PTR;
     }
 
     Node_e* node = (Node_e*)malloc(sizeof(Node_e));
     if (node==NULL) {
-        return false;
+        return L_MEM_ERR;
     }
     
     node->info = malloc(lista->data_type);
     if (node->info==NULL) {
         free(node);
-        return false;
+        return L_MEM_ERR;
     }
     memcpy(node->info, valor, lista->data_type);
 
@@ -76,18 +74,17 @@ bool insereFL(Lista_e* lista, const void* valor) {
     lista->tail = node;
     lista->tam = lista->tam + 0x1;
 
-    return true;
+    return L_SUCCESS;
 }
 
-bool insereOL(Lista_e* lista, const void* valor, Comparador cmp) {
+L_Status insereOL(Lista_e* lista, const void* valor, Comparador cmp) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return false;
+        return L_NULL_PTR;
     }
 
     Node_e* node = (Node_e*)malloc(sizeof(Node_e));
     if (node==NULL) {
-        return false;
+        return L_MEM_ERR;
     }
 
     Node_e* curr = lista->head;
@@ -96,7 +93,7 @@ bool insereOL(Lista_e* lista, const void* valor, Comparador cmp) {
     node->info = malloc(lista->data_type);
     if (node->info==NULL) {
         free(node);
-        return false;
+        return L_MEM_ERR;
     }
     memcpy(node->info, valor, lista->data_type);
 
@@ -117,24 +114,23 @@ bool insereOL(Lista_e* lista, const void* valor, Comparador cmp) {
     }
     lista->tam = lista->tam + 0x1;
 
-    return true;
+    return L_SUCCESS;
 }
 
-bool inserePL(Lista_e* lista, const void* valor, size_t p) {
+L_Status inserePL(Lista_e* lista, const void* valor, size_t p) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return false;
+        return L_NULL_PTR;
     }
 
     Node_e* node = (Node_e*)malloc(sizeof(Node_e));
     if (node==NULL) {
-        return false;
+        return L_MEM_ERR;
     }
 
     node->info = malloc(lista->data_type);
     if (node->info==NULL) {
         free(node);
-        return false;
+        return L_MEM_ERR;
     }
     memcpy(node->info, valor, lista->data_type);
     node->prox = NULL;
@@ -162,16 +158,15 @@ bool inserePL(Lista_e* lista, const void* valor, size_t p) {
 
     lista->tam = lista->tam + 0x1;
 
-    return true;
+    return L_SUCCESS;
 }
 
-bool rmIL(Lista_e* lista) {
+L_Status rmIL(Lista_e* lista) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return false;
+        return L_NULL_PTR;
     }
     if (lista->tam==0x0) {
-        return false;
+        return L_EMPTY;
     }
 
     Node_e* aux = lista->head;
@@ -187,16 +182,15 @@ bool rmIL(Lista_e* lista) {
     
     lista->tam = lista->tam - 0x1;
 
-    return true;
+    return L_SUCCESS;
 }
 
-bool rmUL(Lista_e* lista) {
+L_Status rmUL(Lista_e* lista) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return false;
+        return L_NULL_PTR;
     }
     if (lista->tam==0x0) {
-        return false;
+        return L_EMPTY;
     }
 
     if (lista->head==lista->tail) {
@@ -222,19 +216,18 @@ bool rmUL(Lista_e* lista) {
 
     lista->tam = lista->tam - 0x1;
 
-    return true;
+    return L_SUCCESS;
 }
 
-bool rmPL(Lista_e* lista, const size_t p) {
+L_Status rmPL(Lista_e* lista, const size_t p) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return false;
+        return L_NULL_PTR;
     }
     if (lista->tam==0x0) {
-        return false;
+        return L_EMPTY;
     } 
     if (p>=lista->tam) {
-        return false;
+        return L_INV_POS;
     }
 
     Node_e* aux = NULL;
@@ -262,18 +255,19 @@ bool rmPL(Lista_e* lista, const size_t p) {
     free(curr);
     lista->tam = lista->tam - 0x1;
 
-    return true;
+    return L_SUCCESS;
 }
 
-ssize_t rmVL(Lista_e* lista, const void* valor, Comparador cmp) {
+size_t rmVL(Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return -1;
+        if (flag!=NULL) *flag = L_NULL_PTR;
+        return 0;
     }
     
-    ssize_t count = 0;
+    size_t count = 0;
 
-    if (lista->tam==0) {
+    if (lista->tam==0x0) {
+        if (flag!=NULL) *flag = L_EMPTY;
         return count;
     }
 
@@ -317,21 +311,25 @@ ssize_t rmVL(Lista_e* lista, const void* valor, Comparador cmp) {
         }
     }
     lista->tam = lista->tam - count;
+
+    if (flag!=NULL) *flag = L_SUCCESS;
     return count;
 }
 
-ssize_t rmFL(Lista_e* lista, const void* valor, Comparador cmp) {
+// por favor usa a flag aqui porque nao deu pra retornar valor negativo
+size_t rmFL(Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return -1;
+        if (flag!=NULL) *flag = L_NULL_PTR;
+        return 0;
     }
     if (lista->tam==0x0) {
-        return -1;
+        if (flag!=NULL) *flag = L_EMPTY;
+        return 0;
     }
 
     Node_e* aux = NULL;
     Node_e* curr = NULL;
-    ssize_t p = 0x0;
+    size_t p = 0x0;
 
     if (cmp(lista->head->info, valor)==0x0) {
         aux = lista->head;
@@ -344,6 +342,8 @@ ssize_t rmFL(Lista_e* lista, const void* valor, Comparador cmp) {
             lista->tail = NULL;
         }
         lista->tam = lista->tam - 0x1;
+
+        if (flag!=NULL) *flag = L_SUCCESS;
         return p;
     }
 
@@ -362,6 +362,8 @@ ssize_t rmFL(Lista_e* lista, const void* valor, Comparador cmp) {
             free(curr);
 
             lista->tam = lista->tam - 0x1;
+
+            if (flag!=NULL) *flag = L_SUCCESS;
             return p;
         }
         else {
@@ -371,27 +373,33 @@ ssize_t rmFL(Lista_e* lista, const void* valor, Comparador cmp) {
         }
     }
 
-    return -1;
+    if (flag!=NULL) *flag = L_VAL_NOT_FOUND;
+    return 0;
 }
 
-ssize_t searchL(const Lista_e* lista, const void* valor, Comparador cmp) {
+// usa flag aqui tambem, pelo amor do seu codigo 
+size_t searchL(const Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag) {
+    size_t p = 0x0;
+
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return -1;
+        if (flag!=NULL) *flag = L_NULL_PTR;
+        return p;
     }
     if (lista->tam==0x0) {
-        return -1;
+        if (flag!=NULL) *flag = L_EMPTY;
+        return p;
     }
 
     if (cmp(lista->tail->info, valor)==0x0) {
+        if (flag!=NULL) *flag = L_SUCCESS;
         return lista->tam-1;
     }
 
     Node_e* curr = lista->head;
-    ssize_t p = 0x0;
 
     while (curr->prox) {
         if (cmp(curr->info, valor)==0x0) {
+            if (flag!=NULL) *flag = L_SUCCESS;
             return p;
         }
         else {
@@ -400,31 +408,63 @@ ssize_t searchL(const Lista_e* lista, const void* valor, Comparador cmp) {
         }
     }
 
-    return -1;
+    if (flag!=NULL) *flag = L_VAL_NOT_FOUND;
+    return 0;
 }
 
-ssize_t sizeL(const Lista_e* lista) {
+void* getNodeValL(Lista_e* lista, const size_t p, L_Status* flag) {
     if (lista==NULL) {
-        return -1;
+        if (flag!=NULL) *flag = L_NULL_PTR;
+        return NULL;
     }
+    if (p>=lista->tam) {
+        if (flag!=NULL) *flag = L_INV_POS;
+        return NULL;
+    }
+
+    if (p==lista->tam-1) {
+        if (flag!=NULL) *flag = L_SUCCESS;
+        return lista->tail->info;
+    }
+
+    Node_e* curr = lista->head;
+
+    for (size_t i = 0; i < p; i++) {
+        curr = curr->prox;
+    }
+
+    if (flag!=NULL) *flag = L_SUCCESS;
+    return curr->info;
+}
+
+// outra funcao que é recomendado usar a flag
+size_t sizeL(const Lista_e* lista, L_Status* flag) {
+    if (lista==NULL) {
+        if (flag!=NULL) *flag = L_NULL_PTR;
+        return 0;
+    }
+
+    if (flag!=NULL) *flag = L_SUCCESS;
     return lista->tam;
 }
 
-bool taVaziaL(const Lista_e* lista) {
+// cuidado ao usar essa funcao sem passar uma flag como parametro
+bool taVaziaL(const Lista_e* lista, L_Status* flag) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
+        if (flag!=NULL) *flag = L_NULL_PTR;
         return true;
     }
+
+    if (flag!=NULL) *flag = L_SUCCESS;
     return (lista->tam==0x0) ? true : false;
 }
 
-bool limpaL(Lista_e* lista) {
+L_Status limpaL(Lista_e* lista) {
     if (lista==NULL) {
-        printf("\nerro: ponteiro lista -> NULL\n");
-        return false;
+        return L_NULL_PTR;
     }
     if (lista->tam==0x0) {
-        return true;
+        return L_EMPTY;
     }
 
     Node_e* curr = lista->head;
@@ -437,10 +477,14 @@ bool limpaL(Lista_e* lista) {
         free(aux);
     }
 
-    return true;
+    return L_SUCCESS;
 }
 
-void killL(Lista_e* lista) {
+L_Status killL(Lista_e* lista) {
+    if (lista==NULL) {
+        return L_NULL_PTR;
+    }
+
     Node_e* curr = lista->head;
     Node_e* aux = NULL;
 
@@ -451,4 +495,6 @@ void killL(Lista_e* lista) {
         free(aux);
     }
     free(lista);
+
+    return L_SUCCESS;
 }
