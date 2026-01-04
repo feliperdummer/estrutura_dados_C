@@ -4,6 +4,15 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+typedef enum {
+    L_SUCCESS = 0, // sucesso na operacao
+    L_MEM_ERR, // erro de memoria (alocacao, etc)
+    L_NULL_PTR, // ponteiro nulo
+    L_EMPTY, // lista vazia
+    L_INV_POS, // posicao invalida
+    L_VAL_NOT_FOUND // valor nao encontrado
+} L_Status;
+
 /*
     aqui tem a melhor explicacao que eu consegui pensar na hora de escrever essas funcoes,
     caso mesmo assim seja confuso, eu sinceramente nao sei o que dizer;
@@ -50,13 +59,13 @@ typedef struct node_e Node_e;
     _e no fim do nome significa que a struct foi feita
     para listas encadeadas;
  
-    ssize_t tam: quantidade de nos da lista;
+    size_t tam: quantidade de nos da lista;
  
     size_t data_type: quantidade de bytes que o tipo de dado da lista ocupa
 
-        **uso do size_t e ssize_t: no tam eu coloquei porque é bonito, no data_type eu
-                                   coloquei porque eu preciso armazenar a quantidade de
-                                   bytes que o tipo de dado da lista ocupa na memoria;
+        **uso do size_t: no tam eu coloquei porque é bonito, no data_type eu
+                         coloquei porque eu preciso armazenar a quantidade de
+                         bytes que o tipo de dado da lista ocupa na memoria;
  
     Node_e* head: ponteiro para o no inicial da lista;
  
@@ -71,7 +80,7 @@ typedef struct node_e Node_e;
 
 */
 struct lista_e {
-    ssize_t tam;
+    size_t tam;
     size_t data_type;
 
     Node_e* head;
@@ -95,6 +104,8 @@ typedef int (*Comparador)(const void* a, const void* b);
 
     Cria uma struct gerenciadora para lista;
 
+    Retorna a lista ou NULL para falha;
+
     Lista_e* n...: cria um ponteiro para struct gerenciadora e
                    aloca uma struct gerenciadora;
 
@@ -112,10 +123,13 @@ typedef int (*Comparador)(const void* a, const void* b);
 */
 Lista_e* criaL(size_t);
 
-/*bool insereIL(Lista_e* lista, const void* valor):
+/*L_Status insereIL(Lista_e* lista, const void* valor):
     Insere um no no inicio da lista;
 
-    Retorna false para ponteiro nulo ou falha e true para sucesso;
+    Retorna:
+        L_NULL_PTR -> ponteiro da lista nulo;
+        L_MEM_ERR -> erro na alocacao de memoria;
+        L_SUCCESS -> sucesso
  
     Node_e* node...: cria um ponteiro para um no
                      e aloca um no;
@@ -157,13 +171,16 @@ Lista_e* criaL(size_t);
 
     lista->tam = lista->tam + 0x1: incrementa o tamanho da lista em 1;
 */
-bool insereIL(Lista_e*, const void*);
+L_Status insereIL(Lista_e*, const void*);
 
-/*bool insereFL(Lista_e* lista, const void* valor):
+/*L_Status insereFL(Lista_e* lista, const void* valor):
  
     Insere um novo no fim da lista;
 
-    Retorna false para ponteiro nulo ou falha e true para sucesso;
+    Retorna:
+        L_NULL_PTR -> ponteiro da lista nulo;
+        L_MEM_ERR -> erro na alocacao de memoria;
+        L_SUCCESS -> sucesso
  
     Node_e* node...: cria um ponteiro para um no e
                      aloca um no;
@@ -183,13 +200,16 @@ bool insereIL(Lista_e*, const void*);
 
     lista->tam = lista->tam + 0x1: incrementa o tamanho da lista em 1;
 */
-bool insereFL(Lista_e*, const void*);
+L_Status insereFL(Lista_e*, const void*);
 
-/*bool insereOL(Lista_e* lista, const void* valor, Comparador cmp):
+/*L_Status insereOL(Lista_e* lista, const void* valor, Comparador cmp):
 
     Insere um no de forma ordenada na lista;
 
-    Retorna false para ponteiro nulo ou falha e true para sucesso;
+    Retorna:
+        L_NULL_PTR -> ponteiro da lista nulo;
+        L_MEM_ERR -> erro na alocacao de memoria;
+        L_SUCCESS -> sucesso
  
     A funcao espera que a lista esteja ordenada,
     senao, o comportamento sera indefinido;
@@ -230,13 +250,16 @@ bool insereFL(Lista_e*, const void*);
     lista->tam = lista->tam + 0x1: incrementa o tamanho da lista em 1;
  
 */
-bool insereOL(Lista_e*, const void*, Comparador);
+L_Status insereOL(Lista_e*, const void*, Comparador);
 
-/*bool inserePL(Lista_e* lista, const void* valor, size_t p):
+/*L_Status inserePL(Lista_e* lista, const void* valor, size_t p):
  
     Insere um novo numa posicao personalizada;
 
-    Retorna false para ponteiro nulo ou falha e true para sucesso;
+    Retorna:
+        L_NULL_PTR -> ponteiro da lista nulo;
+        L_MEM_ERR -> erro na alocacao de memoria;
+        L_SUCCESS -> sucesso
 
     Node_e* node...: aloca um novo no na memoria;
  
@@ -263,13 +286,16 @@ bool insereOL(Lista_e*, const void*, Comparador);
     lista->tam = lista->tam + 0x1: incrementa o tamanho da lista em 1;
  
 */
-bool inserePL(Lista_e*, const void*, size_t);
+L_Status inserePL(Lista_e*, const void*, size_t);
 
-/*bool rmIL(Lista_e* lista):
+/*L_Status rmIL(Lista_e* lista):
 
     Remove o primeiro no de uma lista;
 
-    Retorna true para sucesso e false para lista vazia ou ponteiro nulo;
+    Retorna:
+        L_NULL_PTR -> ponteiro da lista nulo;
+        L_EMPTY -> lista vazia;
+        L_SUCCESS -> sucesso;
 
     if (list->tam==0x0) {...}: testa se a lista ta vazia;
 
@@ -287,13 +313,16 @@ bool inserePL(Lista_e*, const void*, size_t);
     lista->tam = lista->tam - 0x1: decrementa o tamanho da lista em 1;
 
 */
-bool rmIL(Lista_e*);
+L_Status rmIL(Lista_e*);
 
-/*bool rmUL(Lista_e* lista):
+/*L_Status rmUL(Lista_e* lista):
 
     Remove o ultimo no de uma lista;
 
-    Retorna true para sucesso e false para lista vazia;
+    Retorna:
+        L_NULL_PTR -> ponteiro da lista nulo;
+        L_EMPTY -> lista vazia;
+        L_SUCCESS -> sucesso;
 
     if (lista->tam==0x0) {...}: testa se a lista ta vazia;
 
@@ -306,13 +335,17 @@ bool rmIL(Lista_e*);
     lista->tam = lista->tam - 0x1: decrementa o tamanho da lista em 1;
 
 */
-bool rmUL(Lista_e*);
+L_Status rmUL(Lista_e*);
 
-/*bool rmPL(Lista_e* lista, const size_t p):
+/*L_Status rmPL(Lista_e* lista, const size_t p):
  
     Remove um no na posicao especificada;
  
-    Retorna true pra sucesso, false pra lista vazia ou posicao invalida;
+    Retorna:
+        L_NULL_PTR -> ponteiro da lista nulo;
+        L_EMPTY -> lista vazia;
+        L_INV_POS -> posicao invalida;
+        L_SUCCESS -> sucesso;
  
     if (lista->tam==0x0){...}: testa se a lista ta vazia;
  
@@ -350,13 +383,19 @@ bool rmUL(Lista_e*);
     lista->tam = lista->tam - 0x1: decrementa o tamanho da lista em 1;
  
 */
-bool rmPL(Lista_e*, const size_t);
+L_Status rmPL(Lista_e*, const size_t);
 
-/*ssize_t rmVL(Lista_e* lista, const void* valor, Comparador cmp):
+/*size_t rmVL(Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag):
  
-    Remove um todos os nos do valor passado como argumento;
+    Remove todos os nos do valor passado como argumento;
  
-    Retorna a quantidade de nos retirados ou -1 para ponteiro nulo;
+    Retorna a quantidade de nos retirados.
+    Caso a flag nao seja NULL, o status da operacao sera informado;
+
+    Possiveis flags:
+        L_NULL_PTR -> ponteiro nulo;
+        L_EMPTY -> lista vazia;
+        L_SUCCESS -> sucesso;
  
     if (lista->tam==0){...}: testa se a lista ta vazia;
  
@@ -407,17 +446,21 @@ bool rmPL(Lista_e*, const size_t);
  
     lista->tam = lista->tam - count: decrementa a quantidade total de elementos da lista;
 */
-ssize_t rmVL(Lista_e*, const void*, Comparador);
+size_t rmVL(Lista_e*, const void*, Comparador, L_Status*);
 
-/*ssize_t rmFL(Lista_e* lista, const void* valor, Comparador cmp):
-
-    adendo sobre o tipo de retorno: já que pode ser que uma posicao negativa seja retornada,
-                                    tive que usar ssize_t (signed size_t), que pode armazenar
-                                    valores negativos;
+/*size_t rmFL(Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag):
  
     Remove o primeiro no que contenha o valor passado como argumento;
  
-    Retorna a posicao que foi removida em caso de sucesso, e -1 para falha;
+    Retorna a posicao que foi removida em caso de sucesso, e 0 para falha;
+    É Recomendado usar a flag aqui nessa funcao, porque o 0 como falha pode confundir,
+    ja que ele é uma posicao valida da lista;
+
+    Possiveis flags:
+        L_NULL_PTR -> ponteiro nulo;
+        L_EMPTY -> lista vazia;
+        L_VAL_NOT_FOUND -> valor nao encontrado;
+        L_SUCCESS -> sucesso;
  
     if (lista->tam==0x0){...}: testa se a lista ta vazia;
  
@@ -445,13 +488,20 @@ ssize_t rmVL(Lista_e*, const void*, Comparador);
     obs: eu nao especifiquei muito a explicacao desse funcao porque ela e muito parecida com
          a anterior (rmVL) que foi escrita uma constituicao inteira so pra explicar aquela coisa;
 */
-ssize_t rmFL(Lista_e*, const void*, Comparador);
+size_t rmFL(Lista_e*, const void*, Comparador, L_Status*);
 
-/*ssize_t searchL(Lista_e* lista, const void* valor, Comparador cmp):
+/*size_t searchL(const Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag):
  
     Busca por um valor na lista;
  
-    Retorna a posicao do no para sucesso e -1 para falha;
+    Retorna a posicao do no na lista ou 0 para falha;
+    cuidado ao usar sem flag, por causa do 0 como falha pode confundir;
+    
+    Possiveis flags:
+        L_NULL_PTR -> ponteiro nulo;
+        L_EMPTY -> lista vazia;
+        L_VAL_NOT_FOUND -> valor nao encontrado;
+        L_SUCCESS -> sucesso;
  
     if (lista->tam==0){...}: testa se a lista ta vazia;
  
@@ -470,36 +520,81 @@ ssize_t rmFL(Lista_e*, const void*, Comparador);
                              antes do loop;
 
 */
-ssize_t searchL(const Lista_e*, const void*, Comparador);
+size_t searchL(const Lista_e*, const void*, Comparador, L_Status*);
 
-/*ssize_t sizeL(Lista_e*):
+/*void* getNodeValL(Lista_e* lista, const size_t p, L_Status* flag):
 
-    retorna o número de nós da lista atualmente ou -1 para ponteiro nulo;
+    Retorna o endereco de memoria do valor armazenado no nó que
+    se encontra na posicao passada como argumento, ou NULL em 
+    caso de algum erro / valor nao encontrado;
+
+    Possiveis flags: 
+        L_NULL_PTR -> ponteiro nulo;
+        L_INV_POS -> posicao invalida;
+        L_SUCCESS -> sucesso;
+
+    if (lista==NULL) {...}: testa se o ponteiro da lista é nulo;
+
+    if (p>=lista->tam) {...}: testa se a posicao passada como argumento é valida,
+                              esse teste tambem cobre caso a posicao seja negativa,
+                              ja que o tipo de dado é size_t, significando que no
+                              caso de uma posicao negativa, o valor seria automaticamente
+                              transformado no maior valor possivel de um size_t, o que 
+                              implicaria no teste verdadeiro;
+
+    if (p==lista->tam-1) {...}: caso a posicao seja a ultima da lista;
+
+    for (size_t i = 0; i < p; i++) {...}: caminha pela lista até parar no nó da posicao desejada;
 
 */
-ssize_t sizeL(const Lista_e*);
+void* getNodeValL(Lista_e*, const size_t, L_Status*);
 
-/*bool taVaziaL(Lista_e*):
+/*size_t sizeL(const Lista_e*, L_Status* flag):
 
-    retorna (true) para lista vazia e (false) para ponteiro nulo ou caso tenha elementos;
+    retorna o número de nós da lista atualmente;
+
+    Possiveis flags:
+        L_NULL_PTR -> ponteiro nulo;
+        L_SUCCESS -> sucesso;
 
 */
-bool taVaziaL(const Lista_e*);
+size_t sizeL(const Lista_e*, L_Status*);
 
-/*bool limpaL(Lista_e*):
+/*bool taVaziaL(const Lista_e*, L_Status* flag):
+
+    retorna true para lista vazia ou ponteiro nulo(!!!!) e false para o contrario;
+
+    outra funcao que é bom usar a flag, ja que é unica maneira de saber diferenciar
+    se a lista ta vazia mas existe ou se ela nem foi alocada ainda;
+
+    Possiveis flags:
+        L_NULL_PTR -> ponteiro nulo;
+        L_SUCCESS -> sucesso;
+
+*/
+bool taVaziaL(const Lista_e*, L_Status*);
+
+/*L_Status limpaL(Lista_e*):
 
     remove todos os nós da lista, mas a mantém na memória;
 
-    retorna true para sucesso e false para ponteiro nulo
+    Possiveis flags de retorno:
+        L_NULL_PTR -> ponteiro nulo;
+        L_EMPTY -> lista vazia;
+        L_SUCCESS -> sucesso;
 
 */
-bool limpaL(Lista_e*);
+L_Status limpaL(Lista_e*);
 
-/*void killL(Lista_e* l):
+/*L_Status killL(Lista_e* l):
  
     elimina a lista;
+
+    Possiveis flags de retorno:
+        L_NULL_PTR -> ponteiro nulo;
+        L_SUCCESS -> sucesso;
  
 */
-void killL(Lista_e*);
+L_Status killL(Lista_e*);
 
 #endif // LISTA_ENCAD_H
