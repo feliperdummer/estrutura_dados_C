@@ -1,0 +1,18 @@
+compilacao e uso:
+
+
+Compile o arquivo, mas não gere o executável:
+
+	gcc -c lista_dencad.c -o lista_dencad.o
+
+Coloque o arquivo .o dentro de um arquivo de biblioteca:
+
+	ar rcs liblista_dencad.a lista_dencad.o
+
+
+
+Agora é só adicionar como padrao em alguma IDE ou usar
+
+	gcc main.c liblista_dencad.a -o teste.o
+
+para juntar os arquivos manualmente
