@@ -5,7 +5,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-
 Lista_e* criaL(size_t data_size) {
     Lista_e* lista = (Lista_e*)malloc(sizeof(Lista_e));
     if (lista==NULL) {
@@ -21,7 +20,7 @@ Lista_e* criaL(size_t data_size) {
 }
 
 L_Status insereIL(Lista_e* lista, const void* valor) {
-    if (lista==NULL) {
+    if (lista==NULL || valor==NULL) {
         return L_NULL_PTR;
     }
 
@@ -48,7 +47,7 @@ L_Status insereIL(Lista_e* lista, const void* valor) {
 }
 
 L_Status insereFL(Lista_e* lista, const void* valor) {
-    if (lista==NULL) {
+    if (lista==NULL || valor==NULL) {
         return L_NULL_PTR;
     }
 
@@ -78,7 +77,7 @@ L_Status insereFL(Lista_e* lista, const void* valor) {
 }
 
 L_Status insereOL(Lista_e* lista, const void* valor, Comparador cmp) {
-    if (lista==NULL) {
+    if (lista==NULL || valor==NULL) {
         return L_NULL_PTR;
     }
 
@@ -118,7 +117,7 @@ L_Status insereOL(Lista_e* lista, const void* valor, Comparador cmp) {
 }
 
 L_Status inserePL(Lista_e* lista, const void* valor, size_t p) {
-    if (lista==NULL) {
+    if (lista==NULL || valor==NULL) {
         return L_NULL_PTR;
     }
 
@@ -259,7 +258,7 @@ L_Status rmPL(Lista_e* lista, const size_t p) {
 }
 
 size_t rmVL(Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag) {
-    if (lista==NULL) {
+    if (lista==NULL || valor==NULL) {
         if (flag!=NULL) *flag = L_NULL_PTR;
         return 0;
     }
@@ -318,7 +317,7 @@ size_t rmVL(Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag) {
 
 // por favor usa a flag aqui porque nao deu pra retornar valor negativo
 size_t rmFL(Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag) {
-    if (lista==NULL) {
+    if (lista==NULL || valor==NULL) {
         if (flag!=NULL) *flag = L_NULL_PTR;
         return 0;
     }
@@ -381,7 +380,7 @@ size_t rmFL(Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag) {
 size_t searchL(const Lista_e* lista, const void* valor, Comparador cmp, L_Status* flag) {
     size_t p = 0x0;
 
-    if (lista==NULL) {
+    if (lista==NULL || valor==NULL) {
         if (flag!=NULL) *flag = L_NULL_PTR;
         return p;
     }
@@ -412,7 +411,7 @@ size_t searchL(const Lista_e* lista, const void* valor, Comparador cmp, L_Status
     return 0;
 }
 
-void* getNodeValL(Lista_e* lista, const size_t p, L_Status* flag) {
+void* getNodeValL(const Lista_e* lista, const size_t p, L_Status* flag) {
     if (lista==NULL) {
         if (flag!=NULL) *flag = L_NULL_PTR;
         return NULL;
@@ -476,6 +475,9 @@ L_Status limpaL(Lista_e* lista) {
         free(aux->info);
         free(aux);
     }
+
+    lista->head = NULL;
+    lista->tail = NULL;
 
     return L_SUCCESS;
 }
