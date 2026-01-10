@@ -547,7 +547,7 @@ size_t searchL(const Lista_e*, const void*, Comparador, L_Status*);
     for (size_t i = 0; i < p; i++) {...}: caminha pela lista até parar no nó da posicao desejada;
 
 */
-void* getNodeValL(Lista_e*, const size_t, L_Status*);
+void* getNodeValL(const Lista_e*, const size_t, L_Status*);
 
 /*size_t sizeL(const Lista_e*, L_Status* flag):
 
