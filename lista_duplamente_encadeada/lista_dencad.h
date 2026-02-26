@@ -14,19 +14,13 @@ typedef enum {
 } LD_Status;
 
 /*
-    aqui tem a melhor explicacao que eu consegui pensar na hora de escrever essas funcoes,
-    caso mesmo assim seja confuso, eu sinceramente nao sei o que dizer;
-
-*/
-
-/*
     a IA Gemini 3 Pro me foi bem util na hora de pensar na forma de escrever as linhas de código, ela traz 
     ideias estruturais muito úteis a cerca do design que eu nunca teria pensado sozinho;
 
-    Nenhuma IA foi usada para gerar código, todo código gerado é uma mistura de 
-    meu+geeksForGeeks+bufferOverFLow+w3Schools;
+    Nenhuma IA foi usada para gerar código.
 
-    pensa tipo uma distribuicao de 80-20, ai voce decide pra quem atribuir cada valor;
+    Fontes de ajuda: Stack Overflow, W3Schools, Geeks For Geeks;
+
 */
 
 /* struct node_d:
@@ -530,3 +524,4 @@ LD_Status limpaLD(Lista_d*);
 LD_Status killLD(Lista_d*);
 
 #endif // LISTA_DUP_ENCAD_H
+
