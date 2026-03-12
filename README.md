@@ -3,13 +3,13 @@ Contém arquivos fonte com diversas funções relacionadas a diversas estruturas
 
 Libs atualizadas:
 
-lista_encadeada_simples
+lista_encadeada_simples - 
 lista_duplamente_encadeada
 
 
 Libs desatualizadas:
 
-fila_array
-fila_lista
-pilha_array
+fila_array - 
+fila_lista -
+pilha_array - 
 pilha_lista
